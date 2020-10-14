@@ -3,7 +3,7 @@
 ## General Cheat Sheet
 
 Raspberry Pi **IP**: `pi@raspberrypi.local`
-Raspberry Pi **Password**: `queenseng`
+Raspberry Pi **Password**: `raspberry`
 
 ## Set-Up for Windows 10
 
