@@ -20,7 +20,7 @@ class ImageProvider:
         sleep(sleep_timer)
 
     def getImg(self):
-        self.camera.start_preview()
-        sleep(self.sleep_timer)
+        # self.camera.start_preview()
+        # sleep(self.sleep_timer)
         self.camera.capture("captured_img/img.jpg")
-        self.camera.stop_preview()
+        # self.camera.stop_preview()
