@@ -7,3 +7,6 @@ numpy
 
 # Speech to text library
 pyttsx3
+
+# Used for image capture on the raspberry processing, importing this only works on the pi
+picamera
