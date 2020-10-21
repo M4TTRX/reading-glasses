@@ -4,9 +4,9 @@ import os
 
 
 def main():
-    img_provider = ImageProvider(
-        path=f"{os.path.abspath(os.getcwd())}+/captured/img.jpg"
-    )
+    path = os.path.abspath(os.getcwd())
+    print(path)
+    img_provider = ImageProvider(path=f"{path}/captured/img.jpg")
     img_provider.getImg()
 
 
