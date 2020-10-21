@@ -15,8 +15,6 @@ class ImageProvider:
         resolution=(IMG_HEIGHT, IMG_WIDTH),
     ):
         self.camera = PiCamera()
-        self.camera.resolution = resolution
-        self.camera.framerate = DEFAULT_FRAMERATE
         self.sleep_timer = sleep_timer
         self.path = path
         sleep(sleep_timer)
@@ -24,5 +22,5 @@ class ImageProvider:
     def getImg(self):
         # self.camera.start_preview()
         # sleep(self.sleep_timer)
-        self.camera.capture(path)
+        self.camera.capture(self.path)
         # self.camera.stop_preview()
