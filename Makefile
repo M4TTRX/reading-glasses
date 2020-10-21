@@ -1,2 +1,2 @@
-install-dependencies:
-	pip install -r requirement.txt;
+install:
+	python3 -m pip install -r requirement.txt;
