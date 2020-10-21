@@ -1,6 +1,7 @@
+from picamera.array import PiRGBArray
 from picamera import PiCamera
 from time import sleep
-import numpy as np
+import cv2
 
 IMG_WIDTH = 2592
 IMG_HEIGHT = 1944
@@ -11,7 +12,7 @@ class ImageProvider:
     def __init__(
         self,
         path,
-        sleep_timer=5,
+        sleep_timer=2,
         resolution=(IMG_HEIGHT, IMG_WIDTH),
     ):
         self.camera = PiCamera()
@@ -20,7 +21,13 @@ class ImageProvider:
         sleep(sleep_timer)
 
     def getImg(self):
-        # self.camera.start_preview()
-        # sleep(self.sleep_timer)
-        self.camera.capture(self.path)
-        # self.camera.stop_preview()
+        # self.camera.capture(self.path)
+
+        # grab a reference to the raw cam capture
+        rawCapture = PiRGBArray(self.camera)
+
+        # allow the camera to warmup
+        sleep(self.sleep_timer)
+
+        self.camera.capture(rawCapture, format="bgr")
+        return rawCapture.array
