@@ -10,6 +10,7 @@ DEFAULT_FRAMERATE = 24
 class ImageProvider:
     def __init__(
         self,
+        path,
         sleep_timer=5,
         resolution=(IMG_HEIGHT, IMG_WIDTH),
     ):
@@ -17,10 +18,11 @@ class ImageProvider:
         self.camera.resolution = resolution
         self.camera.framerate = DEFAULT_FRAMERATE
         self.sleep_timer = sleep_timer
+        self.path = path
         sleep(sleep_timer)
 
     def getImg(self):
         # self.camera.start_preview()
         # sleep(self.sleep_timer)
-        self.camera.capture("captured_img/img.jpg")
+        self.camera.capture(path)
         # self.camera.stop_preview()
