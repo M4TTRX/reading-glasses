@@ -1,7 +1,6 @@
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from time import sleep
-import cv2
 
 IMG_WIDTH = 2592
 IMG_HEIGHT = 1944

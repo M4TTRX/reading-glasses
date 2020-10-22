@@ -1,7 +1,7 @@
 from lib.speech.text_to_speech import TextToSpeech
 from lib.camera.img_provider import ImageProvider
 import os
-import cv2
+import png
 
 
 def main():
@@ -9,7 +9,7 @@ def main():
     print(path)
     img_provider = ImageProvider(path=f"{path}/captured/img.jpg")
     img = img_provider.getImg()
-    cv2.imwrite("coolpic.jpg", img)
+    png.from_array(img).save("coolpic.jpg")
 
 
 if __name__ == "__main__":
