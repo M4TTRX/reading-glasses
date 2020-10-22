@@ -28,5 +28,5 @@ class ImageProvider:
         # allow the camera to warmup
         sleep(self.sleep_timer)
 
-        self.camera.capture(rawCapture, format="bgr")
+        self.camera.capture(rawCapture, format="rgb")
         return rawCapture.array
