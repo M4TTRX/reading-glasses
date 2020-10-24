@@ -1,9 +1,0 @@
-
-# image processing library
-opencv-python
-
-# Math library used by opencv
-numpy
-
-# Speech to text library
-pyttsx3
