@@ -1,13 +1,20 @@
 from lib.speech.text_to_speech import TextToSpeech
 from lib.camera.img_provider import ImageProvider
+from lib.io.button.trigger_button import TriggerButton
+from lib.ocr.mock_ocr import MockOCR
 
 
-def main():
-    path = os.path.abspath(os.getcwd())
-    img_provider = ImageProvider(path=f"{path}/captured/img.jpg")
-    img_arr = img_provider.getImg()
-    im = Image.fromarray(img_arr)
-    im.save("test.png")
+def main(
+    tts=TextToSpeech(),
+    img_provider=ImageProvider(),
+    trigger_button=TriggerButton(),
+    ocr=MockOCR(),
+):
+    while True:
+        trigger_button.wait_for_trigger()
+        img = img_provider.get_img()
+        text = ocr.get_text(img)
+        tts.say(text)
 
 
 if __name__ == "__main__":
