@@ -2,20 +2,19 @@ import cv2
 import numpy as np
 import pytesseract as pt
 
-PATH = r"C:\Program Files\Tesseract-OCR\tesseract"
-
 
 class OCR:
     def __init__(
         self,
         custom_config=r"--oem 3 --psm 6",
-        tesseract_path=PATH,
+        tesseract_path="",
     ):
         self.custom_config = custom_config
         self.tesseract_path = tesseract_path
 
         # set up tesseract
-        pt.pytesseract.tesseract_cmd = tesseract_path
+        if tesseract_path != "":
+            pt.pytesseract.tesseract_cmd = tesseract_path
         print("Tesseract version:", pt.get_tesseract_version())
         return
 
