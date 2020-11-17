@@ -6,11 +6,17 @@ PATH = r"C:\Program Files\Tesseract-OCR\tesseract"
 
 
 class OCR:
-    def __init__(self, custom_config=r"--oem 3 --psm 6"):
-        # Adding custom options
-        pt.pytesseract.tesseract_cmd = PATH
-        print("Tesseract version:", pt.get_tesseract_version())
+    def __init__(
+        self,
+        custom_config=r"--oem 3 --psm 6",
+        tesseract_path=PATH,
+    ):
         self.custom_config = custom_config
+        self.tesseract_path = tesseract_path
+
+        # set up tesseract
+        pt.pytesseract.tesseract_cmd = tesseract_path
+        print("Tesseract version:", pt.get_tesseract_version())
         return
 
     def pre_process(self, img):
