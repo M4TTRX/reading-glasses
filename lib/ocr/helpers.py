@@ -41,6 +41,5 @@ def deskew(image):
 
 def print_time_now():
     now = localtime()
-    current_time = now.strftime("%H:%M:%S")
-    print("Current Time =", current_time)
+    print("Current Time =", now)
     return now
