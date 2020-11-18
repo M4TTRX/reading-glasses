@@ -1,6 +1,7 @@
 from cv2 import cvtColor, threshold, COLOR_BGR2GRAY, THRESH_BINARY, THRESH_OTSU
 from pytesseract import pytesseract, get_tesseract_version, image_to_string
-from .helpers import resize_img, deskew, print_time_now
+from .helpers import resize_img, deskew
+import time
 
 
 class OCR:
@@ -26,20 +27,20 @@ class OCR:
         return processed_img
 
     def get_text(self, img, verbose=True):
-        if verbose:
-            start = print_time_now()
+        start = time.time()
 
         # pre process the image
         img = self.pre_process(img)
 
         # extract the text from the image
-        text = image_to_string(img, config=self.custom_config)
+        text = image_to_string(img)  # config=self.custom_config
 
         # remove newline characters,
         # which will improve the text to speech down the line
         text = text.replace("\n", " ").replace("\r", "")
 
+        end = time.time()
         if verbose:
-            end = print_time_now()
-            print("Elapsed:", end - start)
+            print("Time elapsed:", end - start)
+
         return text
