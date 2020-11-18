@@ -1,6 +1,6 @@
-import cv2
-import numpy as np
-import pytesseract as pt
+from cv2 import cvtColor, threshold, COLOR_BGR2GRAY, THRESH_BINARY, THRESH_OTSU
+from pytesseract import pytesseract, get_tesseract_version, image_to_string
+from .helpers import resize_img, deskew, print_time_now
 
 
 class OCR:
@@ -14,34 +14,32 @@ class OCR:
 
         # set up tesseract
         if tesseract_path != "":
-            pt.pytesseract.tesseract_cmd = tesseract_path
-        print("Tesseract version:", pt.get_tesseract_version())
+            pytesseract.tesseract_cmd = tesseract_path
+        print("Tesseract version:", get_tesseract_version())
         return
 
     def pre_process(self, img):
-        processed_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        processed_img = cv2.threshold(
-            processed_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
-        )[1]
-        processed_img = self.deskew(processed_img)
+        processed_img = cvtColor(img, COLOR_BGR2GRAY)
+        processed_img = resize_img(processed_img)
+        processed_img = threshold(processed_img, 0, 255, THRESH_BINARY + THRESH_OTSU)[1]
+        processed_img = deskew(processed_img)
         return processed_img
 
-    def deskew(self, image):
-        coords = np.column_stack(np.where(image > 0))
-        angle = cv2.minAreaRect(coords)[-1]
-        if angle < -45:
-            angle = -(90 + angle)
-        else:
-            angle = -angle
-        (h, w) = image.shape[:2]
-        center = (w // 2, h // 2)
-        M = cv2.getRotationMatrix2D(center, angle, 1.0)
-        rotated = cv2.warpAffine(
-            image, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE
-        )
-        return rotated
+    def get_text(self, img, verbose=True):
+        if verbose:
+            start = print_time_now()
 
-    def get_text(self, img):
-        text = pt.image_to_string(img, config=self.custom_config)
+        # pre process the image
+        img = self.pre_process(img)
+
+        # extract the text from the image
+        text = image_to_string(img, config=self.custom_config)
+
+        # remove newline characters,
+        # which will improve the text to speech down the line
         text = text.replace("\n", " ").replace("\r", "")
+
+        if verbose:
+            end = print_time_now()
+            print("Elapsed:", end - start)
         return text
