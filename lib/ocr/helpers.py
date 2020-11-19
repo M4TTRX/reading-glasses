@@ -12,7 +12,15 @@ from numpy import column_stack, where
 
 
 def resize_img(img, max_side=1000):
+    """
+    This function resizes an image, while keeping its aspect ratio,
+    ensuring that its largest side is not greater
+    than max_side (1000px by default).
+    """
     height, width = img.shape
+    # if the image is small enough as is, return it unchanged
+    if height <= 1000 and width <= 1000:
+        return img
     dim = tuple()
     if height > width:
         scale_ratio = max_side / height
@@ -23,6 +31,7 @@ def resize_img(img, max_side=1000):
     return resize(img, dim, interpolation=INTER_AREA)
 
 
+# this function deskews an image
 def deskew(image):
     coords = column_stack(where(image > 0))
     angle = minAreaRect(coords)[-1]
@@ -37,9 +46,3 @@ def deskew(image):
         image, M, (w, h), flags=INTER_CUBIC, borderMode=BORDER_REPLICATE
     )
     return rotated
-
-
-def print_time_now():
-    now = localtime()
-    print("Current Time =", str(now))
-    return now
