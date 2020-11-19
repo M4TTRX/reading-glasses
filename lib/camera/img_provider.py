@@ -18,7 +18,7 @@ class ImageProvider:
         self.camera = PiCamera()
         sleep(sleep_timer)
 
-    def getImg(self, sleep_timer=1, verbose=False, save_image=False):
+    def get_img(self, sleep_timer=1, verbose=False, save_image=False):
         # self.camera.capture(self.path)
         if verbose:
             print("Initiating camera capture...")
@@ -34,7 +34,8 @@ class ImageProvider:
             print("Image capture completed")
 
         img_arr = rawCapture.array
-        # save the image if needed
+
+        # save the image if save_image is enabled
         if save_image:
             from datetime import datetime
 
