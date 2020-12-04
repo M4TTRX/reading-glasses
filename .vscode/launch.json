@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
             "name": "Test",
             "type": "python",
@@ -18,6 +19,14 @@
             "request": "launch",
             "program": "experimentation/tesseract_performance.py",
             "console": "integratedTerminal",
+        },
+        {
+            "name": "Current",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
         }
     ]
+
 }

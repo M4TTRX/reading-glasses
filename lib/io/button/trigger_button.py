@@ -11,19 +11,14 @@ class IOButtonError(Exception):
 class TriggerButton:
     def __init__(
         self,
-        button_pin=17,
+        button_pin=11,
         sleep_timer=0.1,
     ):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)  # Ignore warning for now
+        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     def wait_for_trigger(self, verbose=False):
-        try:
-            while GPIO.input(self.buttonPin):
-                sleep(self.sleep_timer)
-            if verbose:
-                print("Button Trigger Detected")
-        except:
-            GPIO.cleanup()
-            raise IOButtonError()
-        GPIO.cleanup()
+        while True:  # Run forever
+            if GPIO.input(10) == GPIO.HIGH:
+                print("Button was pushed!")
