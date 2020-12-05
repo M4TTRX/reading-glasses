@@ -1,6 +1,5 @@
 from cv2 import cvtColor, threshold, COLOR_BGR2GRAY, THRESH_BINARY, THRESH_OTSU
 from pytesseract import pytesseract, get_tesseract_version, image_to_string
-from .helpers import resize_img, deskew
 import time
 
 

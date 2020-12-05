@@ -43,8 +43,11 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
 
     # apply the four point transform to obtain a top-down
     # view of the original image
-    warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
-
+    try:
+        warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
+    except:
+        print("Image is already scanned properly")
+        warped = orig
     # convert the warped image to grayscale, then threshold it
     # to give it that 'black and white' paper effect
     T = threshold_local(warped, block_size=11, offset=5, method="gaussian")
@@ -109,11 +112,14 @@ def find_lines(img, show_imgs=False):
         block.append(len(row_values))
         block_list.append(block)
 
+    row_list = [
+        orig[int(block[0] * ratio) : int(block[1] * ratio)] for block in block_list
+    ]
     if show_imgs:
-        for block in block_list:
-            cv2.imshow("block", img[block[0] : block[1]])
+        for row in row_list:
+            cv2.imshow("block", row)
             cv2.waitKey(0)
-    return [img[block[0] : block[1]] for block in block_list]
+    return row_list
 
 
 def get_lines_from_img(img, display_img=False):
