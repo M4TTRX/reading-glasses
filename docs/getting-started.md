@@ -5,7 +5,13 @@
 Raspberry Pi **IP**: `pi@raspberrypi.local`
 Raspberry Pi **Password**: `raspberry`
 
-## Set-Up for Windows 10
+## Set up the project on your computer
+
+1. Clone the repository
+2. Install the dependencies with `pip install -r requirements.txt` on windows and `make install` on macOS and Linux (including the raspberry pi linux)
+3. Run the `main_test.py` file to run it on pc and test the software. Test options are in the works too.
+
+## Set-Up the rasberry Pi for Windows 10
 
 ### Installing ssh
 
