@@ -1,6 +1,6 @@
 scikit-image
 opencv-python
 pytesseract
-numpy
+numpy==1.19.3
 imutils
 pyttsx3

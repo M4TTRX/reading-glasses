@@ -1,6 +1,5 @@
 from cv2 import cvtColor, threshold, COLOR_BGR2GRAY, THRESH_BINARY, THRESH_OTSU
 from pytesseract import pytesseract, get_tesseract_version, image_to_string
-from .helpers import resize_img, deskew
 import time
 
 
@@ -19,18 +18,8 @@ class OCR:
         print("Tesseract version:", get_tesseract_version())
         return
 
-    def pre_process(self, img):
-        processed_img = cvtColor(img, COLOR_BGR2GRAY)
-        processed_img = resize_img(processed_img)
-        processed_img = threshold(processed_img, 0, 255, THRESH_BINARY + THRESH_OTSU)[1]
-        processed_img = deskew(processed_img)
-        return processed_img
-
     def get_text(self, img, verbose=True):
         start = time.time()
-
-        # pre process the image
-        img = self.pre_process(img)
 
         # extract the text from the image
         text = image_to_string(img)  # config=self.custom_config
