@@ -16,6 +16,8 @@ class ImageProvider:
         resolution=(IMG_HEIGHT, IMG_WIDTH),
     ):
         self.camera = PiCamera()
+        self.sleep_timer = sleep_timer
+        self.resolution = resolution
         sleep(sleep_timer)
 
     def get_img(self, sleep_timer=1, verbose=False, save_image=False):
@@ -39,8 +41,8 @@ class ImageProvider:
         if save_image:
             from datetime import datetime
 
-            img_name = datetime.now().strftime("%d/%m/%Y_%H:%M:%S") + ".png"
-
+            img_name = datetime.now().strftime("%d_%m_%Y_%H:%M:%S") + ".png"
+            img_name = "picshot"
             img = Image.fromarray(img_arr)
             img.save(img_name)
 

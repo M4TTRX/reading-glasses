@@ -19,16 +19,24 @@ def start(
         # Wait for the user to press the button
         trigger_button.wait_for_trigger()
 
+        img = []
         # Capture the image
-        img = img_provider.get_img()
+        try:
+            img = img_provider.get_img(save_image=True)
+        except:
+            message = "Could not capture the image"
+            print(f"‼ {message}")
+            tts.say(message)
+            pass
 
         # Break down the image into paragraph for more performant processing
-        lines = get_lines_from_img(img, display_img=False)
-        for line in lines:
-            text = ocr.get_text(line)
-            print(text)
-            tts.say(text)
-        tts.say("\n\nOver")
+        if len(img) > 0:
+            lines = get_lines_from_img(img, display_img=False)
+            for line in lines:
+                text = ocr.get_text(line)
+                print(text)
+                tts.say(text)
+            tts.say("\n\nOver")
 
 
 def get_ocr(arg=""):
@@ -72,9 +80,9 @@ def get_img_provider(arg=""):
     if arg == "real" or arg == "r":
         print("Real", end=" ")
         try:
-            from lib.speech.text_to_speech import TextToSpeech
+            from lib.camera.img_provider import ImageProvider
 
-            img_provider = TextToSpeech()
+            img_provider = ImageProvider()
         except:
             print("❌")
             return
