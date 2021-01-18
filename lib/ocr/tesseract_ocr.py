@@ -8,6 +8,7 @@ class OCR:
         self,
         custom_config=r"--oem 3 --psm 6",
         tesseract_path="",
+        verbose=False,
     ):
         self.custom_config = custom_config
         self.tesseract_path = tesseract_path
@@ -15,7 +16,10 @@ class OCR:
         # set up tesseract
         if tesseract_path != "":
             pytesseract.tesseract_cmd = tesseract_path
-        print("Tesseract version:", get_tesseract_version())
+
+        if verbose:
+            print("Tesseract version:", get_tesseract_version())
+
         return
 
     def get_text(self, img, verbose=True):
