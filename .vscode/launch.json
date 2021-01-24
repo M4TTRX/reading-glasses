@@ -7,11 +7,12 @@
 
 
         {
-            "name": "Test",
+            "name": "PC",
             "type": "python",
             "request": "launch",
-            "program": "main_test.py",
+            "program": "main.py",
             "console": "integratedTerminal",
+            "args": ["--preset", "pc"]
         },
         {
             "name": "Tesseract Performance Test",

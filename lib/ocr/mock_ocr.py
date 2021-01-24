@@ -6,7 +6,7 @@ class MockOCR:
         self,
         message=MESSAGE,
     ):
-        print("Fake OCR created!")
+        self.message = message
 
     def get_text(self, img) -> str:
         return self.message

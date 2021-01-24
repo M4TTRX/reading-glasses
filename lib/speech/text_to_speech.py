@@ -7,7 +7,8 @@ class TextToSpeech:
     ):
         self.speech_engine = pyttsx3.init()
 
-    def say(self, text):
+    def say(self, text, speed=120):
+        self.speech_engine.setProperty("rate", speed)
         self.speech_engine.say(text)
         self.speech_engine.runAndWait()
 

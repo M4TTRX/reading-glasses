@@ -20,7 +20,9 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
 
     # find the contours in the edged image, keeping only the
     # largest ones, and initialize the screen contour
-    cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    cnts = cv2.findContours(
+        edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE
+    )
     cnts = imutils.grab_contours(cnts)
     cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:5]
     # loop over the contours
@@ -75,7 +77,9 @@ def find_lines(img, show_imgs=False):
     orig = img.copy()
     img = imutils.resize(img, height=500)
     # threshold the grayscale image
-    thresh = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    thresh = cv2.threshold(
+        img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
+    )[1]
     height, width = img.shape
 
     blur = cv2.blur(thresh, (3, 3))
@@ -113,7 +117,8 @@ def find_lines(img, show_imgs=False):
         block_list.append(block)
 
     row_list = [
-        orig[int(block[0] * ratio) : int(block[1] * ratio)] for block in block_list
+        orig[int(block[0] * ratio) : int(block[1] * ratio)]
+        for block in block_list
     ]
     if show_imgs:
         for row in row_list:
@@ -138,5 +143,7 @@ def get_lines_from_img(img, display_img=False):
 
 # load the image and compute the ratio of the old height
 # to the new height, clone it, and resize it
-images = [cv2.imread(f"lib/camera/img_saves/{i}.jpg", 1) for i in range(1, 4 + 1)]
+images = [
+    cv2.imread(f"lib/camera/img_saves/{i}.jpg", 1) for i in range(1, 4 + 1)
+]
 image = cv2.imread("lib/camera/img_saves/5.jpg", 1)
