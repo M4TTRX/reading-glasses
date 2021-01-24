@@ -5,6 +5,7 @@ from lib.speech.fake_text_to_speech import MockTextToSpeech
 from lib.ocr.mock_ocr import MockOCR
 from lib.camera.fake_img_provider import MockImageProvider
 from lib.io.button.pc_button import PCTriggerButton
+from lib.preprocessing.paper_crop import get_lines_from_img
 
 
 def start(
@@ -22,20 +23,18 @@ def start(
         img = []
         # Capture the image
         try:
-            img = img_provider.get_img(save_image=True)
+            img = img_provider.get_img(save_image=True, verbose=True)
         except:
             message = "Could not capture the image"
-            print(f"‼ {message}")
+            print(f"⚠ {message}")
             tts.say(message)
             pass
-
+        img_lines = get_lines_from_img(img, display_img=True)
         # Break down the image into paragraph for more performant processing
         if len(img) > 0:
-            lines = get_lines_from_img(img, display_img=False)
-            for line in lines:
-                text = ocr.get_text(line)
-                print(text)
-                tts.say(text)
+            text = ocr.get_text(img)
+            print(text)
+            tts.say(text)
             tts.say("\n\nOver")
 
 
