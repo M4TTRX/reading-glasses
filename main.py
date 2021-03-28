@@ -29,7 +29,7 @@ def start(
             print(f"⚠ {message}")
             tts.say(message)
             pass
-        img_lines = get_lines_from_img(img, display_img=True)
+        img_lines = get_lines_from_img(img)
         # Break down the image into paragraph for more performant processing
         if len(img_lines) > 0:
             for line in img_lines:

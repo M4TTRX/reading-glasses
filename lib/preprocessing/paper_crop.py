@@ -3,7 +3,6 @@ import imutils
 import numpy as np
 from .four_point_transform import four_point_transform
 from skimage.filters import threshold_local
-import matplotlib.pyplot as plt
 
 
 def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
