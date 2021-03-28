@@ -31,11 +31,14 @@ def start(
             pass
         img_lines = get_lines_from_img(img, display_img=True)
         # Break down the image into paragraph for more performant processing
-        if len(img) > 0:
-            text = ocr.get_text(img)
-            print(text)
-            tts.say(text)
+        if len(img_lines) > 0:
+            for line in img_lines:
+                text = ocr.get_text(line)
+                print(text)
+                tts.say(text)
             tts.say("\n\nOver")
+        else:
+            tts.say("Error, no paper was detected")
 
 
 def get_ocr(arg=""):
