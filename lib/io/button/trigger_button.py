@@ -30,6 +30,7 @@ class TriggerButton:
                 while GPIO.input(self.button_pin) == GPIO.HIGH:
                     sleep(0.1)
                 print("Button was pushed!")
+                break
 
 
 def test():
