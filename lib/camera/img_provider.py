@@ -3,7 +3,8 @@ from picamera import PiCamera
 from time import sleep
 import os
 from PIL import Image
-from cv2 import imwrite, cvtColor, COLOR_RGB2BGR
+import cv2
+
 
 IMG_HEIGHT = 736 * 3
 IMG_WIDTH = 480 * 3
@@ -12,9 +13,7 @@ DEFAULT_FRAMERATE = 24
 
 class ImageProvider:
     def __init__(
-        self,
-        sleep_timer=2,
-        resolution=(IMG_HEIGHT, IMG_WIDTH),
+        self, sleep_timer=2, resolution=(IMG_HEIGHT, IMG_WIDTH),
     ):
         self.camera = PiCamera()
         self.sleep_timer = sleep_timer
@@ -40,13 +39,16 @@ class ImageProvider:
 
         img_arr = rawCapture.array
 
+        # rotate the image
+        img_arr = cv2.rotate(img_arr, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        
         # save the image if save_image is enabled
         if save_image:
             from datetime import datetime
 
             img_name = datetime.now().strftime("%d_%m_%Y") + ".jpg"
             print(f"Saving {img_name}")
-            imwrite(img_name, cvtColor(img_arr, COLOR_RGB2BGR))
+            cv2.imwrite(img_name, cv2.cvtColor(img_arr, cv2.COLOR_RGB2BGR))
             sleep(self.sleep_timer)
         return img_arr
 
@@ -57,4 +59,5 @@ def test():
 
 
 if __name__ == "__main__":
+
     test()
