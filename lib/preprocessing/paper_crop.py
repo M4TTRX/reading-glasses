@@ -18,7 +18,10 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
     # Get a threshold by finding the most promimnon shade in the image, which
     # we assume is the paper
     hist = cv2.calcHist([img], [0], None, [256], [0, 256])
-    threshold = np.argmax(hist) - 20
+    # discard dark values
+    minval = 100
+    hist = hist[minval:]
+    threshold = np.argmax(hist) - 20 + minval
 
     ret, thresh_gray = cv2.threshold(paper, threshold, 255, cv2.THRESH_BINARY)
 
