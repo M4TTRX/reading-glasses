@@ -1,5 +1,3 @@
-<link href="/docs/style.css" rel="stylesheet"></link>
-
 # Reading Glasses :eyeglasses:
 
 ## Project introduction
