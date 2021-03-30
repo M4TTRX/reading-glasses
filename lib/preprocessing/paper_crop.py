@@ -31,6 +31,11 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
+    cv2.imwrite(
+        f"debug/firstThreshold.jpg",
+        cv2.cvtColor(thresh_gray, cv2.COLOR_RGB2BGR),
+    )
+
     # Find the contours in the edged image
     contours = cv2.findContours(
         thresh_gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE
@@ -52,10 +57,10 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
         rect = cv2.minAreaRect(countour_poly)
         box = cv2.boxPoints(rect)
         box = np.int0(box)
-
-        # Draw the countours for potential debugging
         if show_imgs:
             cv2.drawContours(paper, [box], 0, (255, 255, 255), 2)
+
+        # Draw the countours for potential debugging
         if area > max_area:
             # we consider the bounding box encompassing the polygon with the
             # largest area to be the paper
@@ -69,6 +74,9 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
+    # save the progress
+    cv2.imwrite(f"debug/progress.jpg", cv2.cvtColor(paper, cv2.COLOR_RGB2BGR))
+
     # apply the four point transform to obtain a top-down
     # view of the original image
     try:
@@ -78,10 +86,6 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
     except:
         print("Image is already scanned properly")
         warped = orig
-
-    # Threshold the image to give it that 'black and white' paper effect
-    T = threshold_local(warped, block_size=11, offset=5, method="gaussian")
-    warped = (warped > T).astype("uint8") * 255
 
     # Show the original and scanned images
     if show_imgs:
@@ -102,7 +106,14 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
 
     # if debugging is on, save the image for proper viewing
     if show_imgs:
-        cv2.imwrite("result_img.jpg", result_img)
+        cv2.imshow("result_img.jpg", result_img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    cv2.imwrite(
+        f"debug/result_img.jpg", cv2.cvtColor(result_img, cv2.COLOR_RGB2BGR)
+    )
+
     return result_img
 
 
@@ -113,6 +124,10 @@ def find_lines(img, show_imgs=False):
     # Resize the image to something smaller to make processing faster
     ratio = img.shape[0] / 500
     paper = imutils.resize(img, height=500)
+
+    # Threshold the image to give it that 'black and white' paper effect
+    T = threshold_local(img, block_size=11, offset=5, method="gaussian")
+    img = (img > T).astype("uint8") * 255
 
     # Blur the image to turn sentences in words into one blurb of darker grey
     paper = cv2.GaussianBlur(paper, (5, 5), cv2.BORDER_DEFAULT)
@@ -138,7 +153,10 @@ def find_lines(img, show_imgs=False):
         cv2.imshow("Blurred + Thresholded image", thresh_gray)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-
+    cv2.imwrite(
+        f"debug/BlurredThresholded.jpg",
+        cv2.cvtColor(thresh_gray, cv2.COLOR_RGB2BGR),
+    )
     # Sometimes the edges of the paper were not cropped out and this can skew
     # the line filtering algorithm, so we need to crop the image.
 
@@ -203,12 +221,18 @@ def find_lines(img, show_imgs=False):
             cv2.imshow("block", row)
             cv2.waitKey(0)
         cv2.destroyAllWindows()
+
+        # saving images for debug
+    for i in range(len(row_list)):
+        cv2.imwrite(
+            f"debug/rows/{i}.jpg", cv2.cvtColor(row_list[i], cv2.COLOR_RGB2BGR)
+        )
     return row_list
 
 
 def get_lines_from_img(img, display_img=False):
     # convert inmage to grey if needed
-    if img.shape[2] == 3:
+    if len(img.shape) == 3:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # crop out the paper

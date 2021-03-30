@@ -29,13 +29,21 @@ def start(
             print(f"⚠ {message}")
             tts.say(message)
             pass
-        img_lines = get_lines_from_img(img)
+
+        # get image lines
+        img_lines = get_lines_from_img(img, display_img=False)
+
+        # logging
+        line_num = len(img_lines)
+        print(f"\n\n Found {line_num} lines!")
         # Break down the image into paragraph for more performant processing
         if len(img_lines) > 0:
-            for line in img_lines:
+            for line, line_number in zip(img_lines, range(line_num)):
+                print(f"Procesing line {line_number + 1} / {line_num}")
                 text = ocr.get_text(line)
                 print(text)
                 tts.say(text)
+            print("/n/n======== OVER =========/n")
             tts.say("\n\nOver")
         else:
             tts.say("Error, no paper was detected")
@@ -89,7 +97,7 @@ def get_img_provider(arg=""):
             print("❌")
             return
     else:
-        print("Fake", end=" ")
+        print("Real", end=" ")
         img_provider = MockImageProvider()
     print("✅")
     return img_provider
@@ -149,6 +157,10 @@ def main(argv):
             elif arg == "pc":
                 tts_arg = "r"
                 ocr_arg = "r"
+            elif arg == "demo":
+                tts_arg = "r"
+                trigger_button_arg = "r"
+                ocr_arg = "r" 
 
     # Apply individual options then
     for opt, arg in opts:
