@@ -30,6 +30,9 @@ Congrats you now have ssh!
 
 ### Sharing your internet connection the Pi
 
+If your raspberry Pi does not have a wifi card and you are connecting to it over USB, you can share your computer's internet connection with it.
+
+
 1. Plug in your raspberry pi, ensure that the green LED is on and wait for like a minute.
 2. Open the *Control Panel*.
 3. Go to *Network and Internet*.
@@ -50,3 +53,9 @@ You should be good to go now, give the pi a minute to connect.
     ```
 2. The password you will have to enter will be queenseng
 3. Test the internet connection by typing `ping google.com`, if you get no error you are good to go!
+
+## Copying the code
+
+There are many ways to copy the code but here are two examples:
+- Download [WinSCP](https://winscp.net/eng/download.php) connect to the Pi and copy paste it
+- clone the repository on the Pi Using git
