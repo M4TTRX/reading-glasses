@@ -2,17 +2,14 @@ import sys, getopt
 
 # Import Mocks
 from lib.speech.fake_text_to_speech import MockTextToSpeech
-from lib.ocr.mock_ocr import MockOCR
+from lib.ocr.mock_ocr import FakeOCR
 from lib.camera.fake_img_provider import MockImageProvider
 from lib.io.button.pc_button import PCTriggerButton
 from lib.preprocessing.paper_crop import get_lines_from_img
 
 
 def start(
-    tts,
-    img_provider,
-    trigger_button,
-    ocr,
+    tts, img_provider, trigger_button, ocr,
 ):
     from lib.preprocessing.paper_crop import get_lines_from_img
 
@@ -62,7 +59,7 @@ def get_ocr(arg=""):
             return
     else:
         print("Fake", end=" ")
-        ocr = MockOCR()
+        ocr = FakeOCR()
     print("✅")
     return ocr
 
@@ -160,7 +157,7 @@ def main(argv):
             elif arg == "demo":
                 tts_arg = "r"
                 trigger_button_arg = "r"
-                ocr_arg = "r" 
+                ocr_arg = "r"
 
     # Apply individual options then
     for opt, arg in opts:
@@ -178,10 +175,7 @@ def main(argv):
     trigger_button = get_trigger_button(trigger_button_arg)
     ocr = get_ocr(ocr_arg)
     start(
-        tts,
-        img_provider,
-        trigger_button,
-        ocr,
+        tts, img_provider, trigger_button, ocr,
     )
 
 

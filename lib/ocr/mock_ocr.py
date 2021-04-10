@@ -1,10 +1,9 @@
 MESSAGE = "The cake is a lie!"
 
 
-class MockOCR:
+class FakeOCR:
     def __init__(
-        self,
-        message=MESSAGE,
+        self, message=MESSAGE,
     ):
         self.message = message
 
