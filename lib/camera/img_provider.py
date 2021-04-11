@@ -13,7 +13,9 @@ DEFAULT_FRAMERATE = 24
 
 class ImageProvider:
     def __init__(
-        self, sleep_timer=2, resolution=(IMG_HEIGHT, IMG_WIDTH),
+        self,
+        sleep_timer=2,
+        resolution=(IMG_HEIGHT, IMG_WIDTH),
     ):
         self.camera = PiCamera()
         self.sleep_timer = sleep_timer
@@ -21,7 +23,7 @@ class ImageProvider:
         self.camera.resolution = resolution
         sleep(sleep_timer)
 
-    def get_img(self, sleep_timer=1, verbose=False, save_image=False):
+    def get_img(self, verbose=False, save_image=False):
         # self.camera.capture(self.path)
         if verbose:
             print("Initiating camera capture...")
@@ -41,7 +43,7 @@ class ImageProvider:
 
         # rotate the image
         img_arr = cv2.rotate(img_arr, cv2.ROTATE_90_COUNTERCLOCKWISE)
-        
+
         # save the image if save_image is enabled
         if save_image:
             from datetime import datetime
@@ -59,5 +61,4 @@ def test():
 
 
 if __name__ == "__main__":
-
     test()

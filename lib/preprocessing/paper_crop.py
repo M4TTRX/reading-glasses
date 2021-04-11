@@ -3,6 +3,7 @@ import imutils
 import numpy as np
 from .four_point_transform import four_point_transform
 from skimage.filters import threshold_local
+import matplotlib.pyplot as plt
 
 
 def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
@@ -18,6 +19,8 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
     # Get a threshold by finding the most promimnon shade in the image, which
     # we assume is the paper
     hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+    plt.plot(hist)
+    plt.show()
     # discard dark values
     minval = 100
     hist = hist[minval:]
@@ -231,7 +234,7 @@ def find_lines(img, show_imgs=False):
 
 
 def get_lines_from_img(img, display_img=False):
-    # convert inmage to grey if needed
+    # convert image to grey if needed
     if len(img.shape) == 3:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 

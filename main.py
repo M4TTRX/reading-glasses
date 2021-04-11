@@ -3,13 +3,16 @@ import sys, getopt
 # Import Mocks
 from lib.speech.fake_text_to_speech import MockTextToSpeech
 from lib.ocr.mock_ocr import FakeOCR
-from lib.camera.fake_img_provider import MockImageProvider
+from lib.camera.fake_img_provider import FakeImageProvider
 from lib.io.button.pc_button import PCTriggerButton
 from lib.preprocessing.paper_crop import get_lines_from_img
 
 
 def start(
-    tts, img_provider, trigger_button, ocr,
+    tts,
+    img_provider,
+    trigger_button,
+    ocr,
 ):
     from lib.preprocessing.paper_crop import get_lines_from_img
 
@@ -95,7 +98,7 @@ def get_img_provider(arg=""):
             return
     else:
         print("Real", end=" ")
-        img_provider = MockImageProvider()
+        img_provider = FakeImageProvider()
     print("✅")
     return img_provider
 
@@ -175,7 +178,10 @@ def main(argv):
     trigger_button = get_trigger_button(trigger_button_arg)
     ocr = get_ocr(ocr_arg)
     start(
-        tts, img_provider, trigger_button, ocr,
+        tts,
+        img_provider,
+        trigger_button,
+        ocr,
     )
 
 

@@ -24,13 +24,16 @@ class TriggerButton:
         GPIO.setwarnings(False)  # Ignore warning for now
         GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-    def wait_for_trigger(self, verbose=False):
-        while True:  # Run forever
-            if GPIO.input(self.button_pin) == GPIO.HIGH:
-                while GPIO.input(self.button_pin) == GPIO.HIGH:
-                    sleep(0.1)
-                print("Button was pushed!")
-                break
+
+def wait_for_trigger(self, verbose=False):
+    while True:  # Run forever
+        if GPIO.input(self.button_pin) == GPIO.HIGH:
+            while GPIO.input(self.button_pin) == GPIO.HIGH:
+                sleep(self.sleep_timer)
+                if verbose:
+                    print("Button was pushed!")
+            return
+        sleep(self.sleep_timer)
 
 
 def test():
