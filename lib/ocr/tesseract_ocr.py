@@ -22,7 +22,7 @@ class OCR:
 
         return
 
-    def get_text(self, img, verbose=True):
+    def get_text(self, img, verbose=False):
         start = time.time()
 
         # extract the text from the image
