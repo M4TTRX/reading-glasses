@@ -28,10 +28,6 @@ class OCR:
         # extract the text from the image
         text = image_to_string(img)  # config=self.custom_config
 
-        # remove newline characters,
-        # which will improve the text to speech down the line
-        text = text.replace("\n", " ").replace("\r", "")
-
         end = time.time()
         if verbose:
             print("Time elapsed:", end - start)

@@ -1,7 +1,7 @@
 import sys, getopt
 
 # Import Mocks
-from lib.speech.fake_text_to_speech import MockTextToSpeech
+from lib.speech.fake_text_to_speech import FakeTextToSpeech
 from lib.ocr.mock_ocr import FakeOCR
 from lib.camera.fake_img_provider import FakeImageProvider
 from lib.io.button.pc_button import PCTriggerButton
@@ -80,7 +80,7 @@ def get_tts(arg=""):
             return
     else:
         print("Fake", end=" ")
-        tts = MockTextToSpeech()
+        tts = FakeTextToSpeech()
     print("✅")
     return tts
 
