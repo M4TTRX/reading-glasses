@@ -3,7 +3,6 @@ import imutils
 import numpy as np
 from .four_point_transform import four_point_transform
 from skimage.filters import threshold_local
-import matplotlib.pyplot as plt
 
 
 def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
@@ -19,8 +18,6 @@ def crop_paper(img, show_imgs=False, edge_crop_percentage=2):
     # Get a threshold by finding the most promimnon shade in the image, which
     # we assume is the paper
     hist = cv2.calcHist([img], [0], None, [256], [0, 256])
-    plt.plot(hist)
-    plt.show()
     # discard dark values
     minval = 100
     hist = hist[minval:]
@@ -245,11 +242,3 @@ def get_lines_from_img(img, display_img=False):
     lines = find_lines(cropped, show_imgs=display_img)
 
     return lines
-
-
-# load the image and compute the ratio of the old height
-# to the new height, clone it, and resize it
-images = [
-    cv2.imread(f"lib/camera/img_saves/{i}.jpg", 1) for i in range(1, 4 + 1)
-]
-image = cv2.imread("lib/camera/img_saves/5.jpg", 1)

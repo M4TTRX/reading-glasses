@@ -5,7 +5,6 @@ from lib.speech.fake_text_to_speech import FakeTextToSpeech
 from lib.ocr.mock_ocr import FakeOCR
 from lib.camera.fake_img_provider import FakeImageProvider
 from lib.io.button.pc_button import PCTriggerButton
-from lib.preprocessing.paper_crop import get_lines_from_img
 
 
 def start(
@@ -40,7 +39,7 @@ def start(
         if len(img_lines) > 0:
             for line, line_number in zip(img_lines, range(line_num)):
                 print(f"Procesing line {line_number + 1} / {line_num}")
-                text = ocr.get_text(line)
+                text = ocr.get_text(line, verbose=True)
                 print(text)
                 tts.say(text)
             print("/n/n======== OVER =========/n")

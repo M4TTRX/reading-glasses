@@ -21,6 +21,8 @@ class ImageProvider:
         self.sleep_timer = sleep_timer
         self.resolution = resolution
         self.camera.resolution = resolution
+        # set shutter speed
+        self.camera.shutter_speed = 1000  # 1ms
         sleep(sleep_timer)
 
     def get_img(self, verbose=False, save_image=False):

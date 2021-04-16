@@ -7,11 +7,12 @@ class TextToSpeech:
     ):
         self.speech_engine = pyttsx3.init()
 
-    def say(self, text, speed=120):
+    def say(self, text, speed=120, verbose=True):
+        if verbose:
+            print(text)
         # Remove newline characters,
         # which will improve the text to speech pace
         text = text.replace("\n", " ").replace("\r", "")
-
         self.speech_engine.setProperty("rate", speed)
         self.speech_engine.say(text)
         self.speech_engine.runAndWait()
